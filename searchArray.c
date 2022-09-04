@@ -7,7 +7,7 @@ int main(){
 	scanf("%d",&size);
 	
 	int arr[size];
-	printf("Enter array elements");
+	printf("Enter array elements\n");
 	for(i=0;i<size;i++){
 		scanf("%d",&arr[i]);
 	}
@@ -27,7 +27,7 @@ int main(){
 	printf("\nEnter search element\t");
 	scanf("%d",&key);
 	switch(ch){
-		case 1:
+		case 1:{
 			// Linear Search
 			for(i=0;i<size;i++){
 				if(arr[i] == key){
@@ -38,8 +38,9 @@ int main(){
 			if(flag==0){
 				printf("Element not found");
 			}
+		}
 			break;
-		case 2:
+		case 2:{
 			//Binary Search
 			int low = 0;
 			int high = size;
@@ -61,9 +62,11 @@ int main(){
 			if(flag == 0){
 				printf("Element not found\n");
 			}
+		}
 			break;
-		default: 
+		default:{ 
 			printf("Enter Valid choice");
+		}
 	}
 	return 0;
 }
