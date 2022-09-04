@@ -48,7 +48,7 @@ int main(){
 			while(low<=high){
 				int mid = (low + high)/2;
 				if(arr[mid] == key){
-					printf("element %d found at position %d\n",key,mid);
+					printf("element %d found at position %d\n",key,mid+1);
 					flag = 1;
 					break;
 				}
