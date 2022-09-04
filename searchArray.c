@@ -39,6 +39,31 @@ int main(){
 				printf("Element not found");
 			}
 			break;
+		case 2:
+			//Binary Search
+			int low = 0;
+			int high = size;
+			
+			while(low<=high){
+				int mid = (low + high)/2;
+				if(arr[mid] == key){
+					printf("element %d found at position %d\n",key,mid);
+					flag = 1;
+					break;
+				}
+				else if(arr[mid]>key){
+					high = mid-1;
+				}
+				else{
+					low = mid+1;
+				}
+			}
+			if(flag == 0){
+				printf("Element not found\n");
+			}
+			break;
+		default: 
+			printf("Enter Valid choice");
 	}
 	return 0;
 }
