@@ -1,123 +1,132 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(){
-	//array creation
-	
-	int size,i;
+int InsertElement(int Arr[],int iSize, int iNo, int iPos)
+{
+    int iCnt = 0;
+    iPos = iPos - 1;
 
-	printf("Enter size of Array");
-	scanf("%d",&size);
-	
-	int arr[size];
-	
-	printf("Enter Array elements\n");
-	for(i=0;i<size;i++){
-		scanf("%d",&arr[i]);
-	}
-	
-	//display before array
-	printf("Array elements are:\n");
-	for(i=0;i<size;i++){
-		printf("%d\t",arr[i]);
-	}
-	
-	//operations
-	
-	int ch;
-	printf("\nChoose Operation:\n");
-	printf("1: Insertion of new element\n");
-	printf("2: Deletion of element\n");
-	printf("3: Merge two arrays\n");
-	
-	scanf("%d",&ch);
-	switch(ch){	
-		case 1:{
-			//insertion of elements	
-			
-			int elePos,eleVal;
-			printf("Enter Position");
-			scanf("%d",&elePos);
-			printf("Enter Value");
-			scanf("%d",&eleVal);
-			
-			elePos--;
-			
-			for(i=size;i>=elePos;i--){
-				arr[i+1] = arr[i];			
-			} 
-			arr[elePos] = eleVal;
-			
-			for(i=0;i<=size;i++){
-				printf("%d\t",arr[i]);
-			}
-		}
-			break;
-			
-		case 2:{
-			//Deletion of elements
-			
-			int elePos;
-			printf("Enter Position");
-			scanf("%d",&elePos);
-			
-			elePos--;
-			
-			for(i=elePos;i<size-1;i++){
-				arr[i] = arr[i+1];
-			}			 
-			
-			for(i=0;i<size-1;i++){
-				printf("%d\t",arr[i]);
-			}
-			printf("\n");
-		}	
-			break;
-			
-		case 3:{ 
-			//Merging arrays
-			
-			int size2;
-			printf("Enter size of second Array");
-			scanf("%d",&size2);
-	
-			int arr2[size2];
-	
-			printf("Enter Array-2 elements\n");
-			for(i=0;i<size2;i++){
-				scanf("%d",&arr2[i]);
-			}
-			
-			//actual merge
-			
-			int size3 = size + size2;
-			int merge[size3];
-			
-			for(i=0;i<size;i++){
-				merge[i] = arr[i];
-				merge[i+size] = arr2[i];
-			}
-			
-			for(i=0;i<size3;i++){
-				printf("%d",merge[i]);
-			}
-		}
-			break;
-			
-		default: 
-			printf("Enter valid choice");
-			break;
-	}
-	
-	
-	return 0;
+    if((iPos < 0) || (iPos > iSize))
+    {
+        printf("Invalid position\n");
+        return -1;
+    }
+
+    for(iCnt = iSize; iCnt > iPos; iCnt--)
+    {
+        Arr[iCnt] = Arr[iCnt - 1];
+    }
+    Arr[iPos] = iNo;
+    iSize = iSize + 1;
+
+    return iSize;
 }
 
+int DeleteElement(int Arr[], int iSize, int iPos)
+{
+    int iCnt = 0;
+    iPos = iPos + 1;
 
+    if((iPos < 0) || (iPos > iSize))
+    {
+        printf("Invalid position\n");
+        return -1;
+    }
 
+    for(iCnt = iPos; iCnt < iSize; iCnt++)
+    {
+        Arr[iCnt] = Arr[iCnt + 1];
+    }
 
+    iSize = iSize - 1;
 
+    return iSize;
+}
+void Display(int Arr[],int iSize)
+{
+    int iCnt = 0;
 
+    for(iCnt = 0; iCnt < iSize; iCnt++)
+    {
+        printf("%d\t",Arr[iCnt]);
+    }
+    printf("\n");
+}
 
+int main()
+{
+    int iSize = 0, iCnt = 0;
+    int *ptr = NULL;
+    int iChoice = -1;
+    int iPos = 0, iNo = 0; 
 
+    printf("Enter size of array:\n");
+    scanf("%d",&iSize);
 
+    ptr = (int *)malloc(iSize * sizeof(int));
 
+    if(ptr == NULL)
+    {
+        printf("Unable to allocate memory\n");
+        return -1;
+    }
+
+    printf("Enter array elements:\n");
+    for(iCnt = 0; iCnt < iSize; iCnt++)
+    {
+        scanf("%d",&ptr[iCnt]);
+    }
+
+    while(iChoice != 0)
+    {
+        printf("\n==============================================================\n");
+
+        printf("Choose the operation:\n\n");
+        printf("1: Insertion\n");
+        printf("2: Deletion\n");
+        printf("3: Display\n");
+        printf("4: Exit\n\n");
+
+        printf("Enter choice:\n");
+        scanf("%d", &iChoice);
+
+        switch(iChoice)
+        {
+            case 1:
+                printf("Enter the position to insert the element:\n");
+                scanf("%d",&iPos);
+
+                printf("Enter number:\n");
+                scanf("%d",&iNo);
+
+                iSize = InsertElement(ptr,iSize,iNo,iPos);
+                break;
+            
+            case 2: 
+                printf("Enter the position of the element to delete :\n");
+                scanf("%d",&iPos);
+
+                iSize = DeleteElement(ptr, iSize, iPos);
+                break;
+
+            case 3:
+                Display(ptr,iSize);
+                break;
+
+            case 4:
+
+                printf("Thank you...\n");
+                iChoice = 0;
+                break;
+
+            default:
+                printf("Invalid choice...\n");
+                break;
+                
+        }
+
+        printf("\n==============================================================\n");
+    }
+
+    return 0;
+}
