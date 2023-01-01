@@ -1,141 +1,143 @@
 #include <stdio.h>
+#include <stdlib.h>
 
-int main(){
-	//array creation
-	
-	int size,i,j;
+void BubbleSort(int Arr[], int iSize)
+{
+    int i = 0, j = 0;
+    int iTemp = 0; 
 
-	printf("Enter size of Array");
-	scanf("%d",&size);
-	
-	int arr[size];
-	
-	printf("Enter Array elements\n");
-	for(i=0;i<size;i++){
-		scanf("%d",&arr[i]);
-	}
-	
-	//display unsorted array
-	printf("Array elements are:\n");
-	for(i=0;i<size;i++){
-		printf("%d\t",arr[i]);
-	}
-	
-	//sorting operations
-	
-	int ch;
-	printf("\nChoose Operation:\n");
-	printf("1: Bubble Sort\n");
-	printf("2: Selection Sort\n");
-	printf("3: insertion Sort\n");
-	
-	
-	scanf("%d",&ch);
-	switch(ch){
-		case 1:{
-			//bubble sort
-			
-			int counter = 1;
-			while(counter<size){
-				for(i=0;i<size-counter;i++){
-					if(arr[i]>arr[i+1]){
-						int temp = arr[i];
-						arr[i] = arr[i+1];
-						arr[i+1] = temp;
-					}
-				}
-				
-				
-				//display iterations
-				
-				printf("Iteration %d =>",counter);
-				for(int j=0;j<size;j++){
-					
-					printf("\t%d",arr[j]);	
-				}
-				printf("\n");
-				counter++;
-
-			}
-		}
-			break;
-			
-		case 2: { 
-	
-			// selection sort
-			
-			for(i=0;i<size-1;i++){
-				for(j=i+1;j<size;j++){
-					if(arr[j]<arr[i]){
-						int temp = arr[j];
-						arr[j] = arr[i];
-						arr[i] = temp;
-					}
-				}	
-				
-				//display iterations
-				
-				printf("Iteration %d =>",i+1);
-				for(int j=0;j<size;j++){
-					
-					printf("\t%d",arr[j]);	
-				}
-				printf("\n");
-			}
-		}
-			break;
-		
-		case 3:{
-			// Insertion sort
-			
-			for(i=1;i<size;i++){
-				int current = arr[i];
-				j = i-1;
-				while(arr[j]>current && j>=0){
-					arr[j+1] = arr[j];
-					j--;
-				}
-				arr[j+1] = current;
-				
-				//display iterations
-				
-				printf("Iteration %d =>",i);
-				for(int j=0;j<size;j++){
-					
-					printf("\t%d",arr[j]);	
-				}
-				printf("\n");
-			}
-		}
-			break;
-			
-		default:{
-			printf("Enter Valid Choice\n");
-		}
-		
-	}
-	return 0;
+    for(i = 1; i < iSize; i++)
+    {
+        for(j = 0; j < iSize - i; j++)
+        {
+            if(Arr[j] > Arr[j + 1])
+            {
+                iTemp = Arr[j];
+                Arr[j] = Arr[j+1];
+                Arr[j+1] = iTemp;
+            }
+        }
+    }
 }
 
+void SelectionSort(int Arr[], int iSize)
+{
+    int i = 0, j = 0;
+    int iTemp = 0;
+
+    for(i = 0; i < iSize; i++)
+    {
+        for(j = (i + 1); j < iSize; j++)
+        {
+            if(Arr[i] > Arr[j])
+            {
+                iTemp = Arr[i];
+                Arr[i] = Arr[j];
+                Arr[j] = iTemp;
+            }
+        }
+    } 
+}
+
+void InsertionSort(int Arr[], int iSize)
+{
+    int i = 0, j = 0;
+    int iKey = 0;
+
+    for(i = 1; i < iSize; i++)
+    {
+        iKey = Arr[i];
+        j = i - 1;
+
+        while((Arr[j] > iKey) && (j >= 0))
+        {
+            Arr[j+1] = Arr[j];
+            j--;
+        }
+        Arr[j+1] = iKey;
+    }
+}
+
+void Display(int Arr[], int iSize)
+{
+    int iCnt = 0;
+
+    for(iCnt = 0; iCnt < iSize; iCnt++)
+    {
+        printf("%d\t",Arr[iCnt]);
+    }
+    printf("\n");
+}
+
+int main()
+{
+    int iSize = 0, iChoice = -1, iCnt = 0;
+    int *ptr = NULL;
+
+    printf("Enter size of array:\n");
+    scanf("%d",&iSize);
+
+    ptr = (int *)malloc(sizeof(int) * iSize);
+
+    if(ptr == NULL)
+    {
+        printf("Unable to allocate memory...");
+        return -1;
+    }
+
+    printf("Enter arrey elements:\n");
+    for(iCnt = 0; iCnt < iSize; iCnt++)
+    {
+        scanf("%d",&ptr[iCnt]);
+    }
 
 
+    while(iChoice != 0)
+    {
+        printf("\n==============================================================\n");
 
+        printf("Choose the operation:\n\n");
+        printf("1: Bubble Sort\n");
+        printf("2: Selection Sort\n");
+        printf("3: Insertion Sort\n");
+        printf("4: Display\n");
+        printf("5: Exit\n\n");
 
+        printf("Enter choice:\n");
+        scanf("%d", &iChoice);
 
+        switch(iChoice)
+        {
+            case 1:
+                BubbleSort(ptr,iSize);
+                break;
+            
+            case 2: 
+                SelectionSort(ptr,iSize);
+                break;
 
+            case 3:
+                InsertionSort(ptr, iSize);
+                break;
 
+            case 4:
+                Display(ptr,iSize);
+                break;
 
+            case 5:
 
+                printf("Thank you...\n");
+                iChoice = 0;
+                break;
 
+            default:
+                printf("Invalid choice...\n");
+                break;
+                
+        }
 
+        printf("\n==============================================================\n");
+    }
 
-
-
-
-
-
-
-
-
-
-
+    return 0;
+}
