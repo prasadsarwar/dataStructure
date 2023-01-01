@@ -164,6 +164,10 @@
             Display(ptr, iSize);
             break;
 
+        case 4: 
+            iChoice = 0;
+            break;
+            
         default:
             printf("Invalid choice...\n");
             break;
